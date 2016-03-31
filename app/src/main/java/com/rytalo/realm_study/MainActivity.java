@@ -120,7 +120,7 @@ add.setOnClickListener(new View.OnClickListener() {
         showStatus("\nPerforming basic Link Query operation...");
         showStatus("Number of persons: " + realm.allObjects(Person.class).size());
 
-        RealmResults<Person> results = realm.where(Person.class).equalTo("cats.name", "Tiger").findAll();
+        RealmResults<Person> results = realm.where(Person.class).equalTo("products.name", "Tiger").findAll();
 
         showStatus("Size of result set: " + results.size());
     }
