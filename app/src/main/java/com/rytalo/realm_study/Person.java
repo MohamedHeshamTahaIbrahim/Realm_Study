@@ -10,11 +10,15 @@ import io.realm.annotations.Ignore;
 public class Person extends RealmObject {
     private String name;
     private int age;
-    private Dog dog;
-    private RealmList<Cat>cats;
+    private Product product;
+    private RealmList<Products> productses;
+
     @Ignore
     private int tempReference;
     private long id;
+
+
+
 
     public String getName() {
         return name;
@@ -32,20 +36,20 @@ public class Person extends RealmObject {
         this.age = age;
     }
 
-    public Dog getDog() {
-        return dog;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setDog(Dog dog) {
-        this.dog = dog;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
-    public RealmList<Cat> getCats() {
-        return cats;
+    public RealmList<Products> getProductses() {
+        return productses;
     }
 
-    public void setCats(RealmList<Cat> cats) {
-        this.cats = cats;
+    public void setProductses(RealmList<Products> productses) {
+        this.productses = productses;
     }
 
     public int getTempReference() {
@@ -64,3 +68,4 @@ public class Person extends RealmObject {
         this.id = id;
     }
 }
+

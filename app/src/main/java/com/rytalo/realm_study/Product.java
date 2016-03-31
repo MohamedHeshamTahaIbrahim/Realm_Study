@@ -6,7 +6,7 @@ import io.realm.annotations.Ignore;
 /**
  * Created by محمد on 27/03/2016.
  */
-public class Dog extends RealmObject {
+public class Product extends RealmObject {
     private String name;
 
     public String getName() {

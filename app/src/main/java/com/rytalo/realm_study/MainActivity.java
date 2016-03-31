@@ -2,11 +2,10 @@ package com.rytalo.realm_study;
 
 import android.app.Activity;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -15,11 +14,10 @@ import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 import io.realm.Sort;
 
-
 public class MainActivity extends Activity {
 public static final String TAG=MainActivity.class.getName();
     private LinearLayout rootLayout = null;
-
+Button add;
     private Realm realm;
     private RealmConfiguration realmConfig;
     @Override
@@ -28,7 +26,7 @@ public static final String TAG=MainActivity.class.getName();
         setContentView(R.layout.activity_main);
         rootLayout = ((LinearLayout) findViewById(R.id.container));
         rootLayout.removeAllViews();
-
+         add=(Button)findViewById(R.id.add);
         // These operations are small enough that
         // we can generally safely run them on the UI thread.
 
@@ -36,8 +34,13 @@ public static final String TAG=MainActivity.class.getName();
         realmConfig = new RealmConfiguration.Builder(this).build();
         // Open the Realm for the UI thread.
         realm = Realm.getInstance(realmConfig);
-
+add.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
         basicCRUD(realm);
+    }
+});
+      basicCRUD(realm);
         basicQuery(realm);
         basicLinkQuery(realm);
 
@@ -100,6 +103,7 @@ public static final String TAG=MainActivity.class.getName();
         // Delete all persons
         realm.beginTransaction();
         realm.allObjects(Person.class).clear();
+       // showStatus(person.getName()+":"+person.getAge());
         realm.commitTransaction();
     }
 
@@ -130,14 +134,14 @@ public static final String TAG=MainActivity.class.getName();
 
         // Add ten persons in one transaction
         realm.beginTransaction();
-        Dog fido = realm.createObject(Dog.class);
+        Product fido = realm.createObject(Product.class);
         fido.setName( "fido");
         for (int i = 0; i < 10; i++) {
             Person person = realm.createObject(Person.class);
             person.setId(i);
             person.setName("Person no. " + i);
             person.setAge(i);
-            person.setDog(fido);
+            person.setProduct(fido);
 
             // The field tempReference is annotated with @Ignore.
             // This means setTempReference sets the Person tempReference
@@ -146,9 +150,9 @@ public static final String TAG=MainActivity.class.getName();
             person.setTempReference(42);
 
             for (int j = 0; j < i; j++) {
-                Cat cat = realm.createObject(Cat.class);
-                cat.setName("Cat_" + j);
-                person.getCats().add(cat);
+                Products products = realm.createObject(Products.class);
+                products.setName("products_" + j);
+                person.getProductses().add(products);
             }
         }
         realm.commitTransaction();
@@ -158,13 +162,13 @@ public static final String TAG=MainActivity.class.getName();
 
         // Iterate over all objects
         for (Person pers : realm.allObjects(Person.class)) {
-            String dogName;
-            if (pers.getDog() == null) {
-                dogName = "None";
+            String productName;
+            if (pers.getProduct() == null) {
+                productName = "None";
             } else {
-                dogName = pers.getDog().getName();
+                productName = pers.getProduct().getName();
             }
-            status += "\n" + pers.getName() + ":" + pers.getAge() + " : " + dogName + " : " + pers.getCats().size();
+            status += "\n" + pers.getName() + ":" + pers.getAge() + " : " + productName + " : " + pers.getProductses().size();
         }
 
         // Sorting
@@ -188,7 +192,10 @@ public static final String TAG=MainActivity.class.getName();
                 .between("age", 7, 9)       // Notice implicit "and" operation
                 .beginsWith("name", "Person").findAll();
         status += "\nSize of result set: " + results.size();
+        if(status=="\nSize of result set: " + results.size()){
 
+
+        }
         realm.close();
         return status;
     }

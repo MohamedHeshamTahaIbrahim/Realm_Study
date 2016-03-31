@@ -5,7 +5,7 @@ import io.realm.RealmObject;
 /**
  * Created by محمد on 28/03/2016.
  */
-public class Cat extends RealmObject {
+public class Products extends RealmObject {
   private String name;
 
     public String getName() {
